@@ -7,9 +7,9 @@ TrajectoryPlannerROS:
   # acc_lim_theta:            3.200 
   max_vel_x:                  0.500
   min_vel_x:                  0.212
-  max_vel_theta:              0.100
+  max_vel_theta:              0.200
   # min_vel_theta:           -0.100 
-  min_in_place_vel_theta:     0.150
+  min_in_place_vel_theta:     0.100
   # escape_vel:              -0.100 
   holonomic_robot:            false
 

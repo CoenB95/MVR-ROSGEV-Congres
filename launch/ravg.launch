@@ -36,15 +36,25 @@
       <group unless="$(arg simulated)">
         <node pkg="rosaria" type="RosAria" name="rosaria"/>
       </group>
+
+      <!-- Joy -->
+      <node pkg="joy" type="joy_node" name="joy_node" output="screen">
+        <param name="dev" value="/dev/input/js1"/>
+      </node>
+      <node pkg="teleop_twist_joy" type="teleop_node" name="joy_twist" output="screen">
+        <remap from="cmd_vel" to="rosaria/cmd_vel"/>
+      </node>
     </group>
 
     <!-- Mapping/Localization/Visualization -->
     <group if="$(arg map)" ns="map">
       <!-- TF: Attach Camera to Robot -->
-	    <node pkg="tf" type="static_transform_publisher" name="base_to_cam" args="0.01 0.06 0.90 0 0.37 0 base_link camera_link 100" />
+	    <node pkg="tf" type="static_transform_publisher" name="base_to_cam" args="0.0 0.0 0.3 0 0 0 base_link camera_link 100" />
     
       <!-- Rtabmap -->
       <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+        <!-- <remap from="odom" to="/ravg/robot/rosaria/pose"/> -->
+
         <arg unless="$(arg localization)" name="args" value="--delete_db_on_start"/> -->
         <arg name="odom_frame_id" value="odom"/> <!-- TF: link rtabmap's 'map' to 'odom' -->
         <arg name="frame_id" value="base_link"/> <!-- TF: link 'odom' to 'base_link' -->
@@ -84,8 +94,8 @@
 			  <param name="frame_id" type="string" value="base_link"/>		
 			  <param name="map_frame_id" type="string" value="map"/>
 			  <param name="wait_for_transform" type="bool" value="true"/>
-			  <param name="min_cluster_size" type="int" value="20"/>
-			  <param name="max_obstacles_height" type="double" value="0.0"/>
+			  <param name="Grid/MinClusterSize" type="int" value="20"/>
+			  <param name="Grid/MaxObstacleHeight" type="double" value="0.0"/>
   	  </node>
     
       <!-- MoveBase -->
